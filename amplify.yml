@@ -1,16 +1,34 @@
 version: 1
 applications:
-  - backend:
+  - frontend:
       phases:
         preBuild:
           commands:
             - npm ci
         build:
           commands:
-            - echo "No build step needed"
+            - echo "No frontend build step needed"
         postBuild:
           commands:
-            - echo "Post build complete"
+            - echo "No frontend post build needed"
+      artifacts:
+        baseDirectory: .
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+    backend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - echo "No backend build step needed"
+        postBuild:
+          commands:
+            - echo "Backend post build complete"
       artifacts:
         baseDirectory: .
         files:
