@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm ci
+  build:
+    commands:
+      - echo "Build step not needed for backend"
+  post_build:
+    commands:
+      - echo "Post-build step"
+
+artifacts:
+  files:
+    - '**/*'
+cache:
+  paths:
+    - node_modules/**/*
