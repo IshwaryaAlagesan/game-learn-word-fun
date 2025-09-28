@@ -7,30 +7,12 @@ applications:
             - npm ci
         build:
           commands:
-            - echo "No frontend build needed"
+            - echo "No build needed"
         postBuild:
           commands:
-            - echo "No frontend post build needed"
+            - npm start   # <--- This runs "node server.js"
       artifacts:
-        baseDirectory: public   # <--- This tells Amplify to look in the 'public' folder
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
-    backend:
-      phases:
-        preBuild:
-          commands:
-            - npm ci
-        build:
-          commands:
-            - echo "No backend build step needed"
-        postBuild:
-          commands:
-            - echo "Backend post build complete"
-      artifacts:
-        baseDirectory: .
+        baseDirectory: public   # or "." if you want to serve from root
         files:
           - '**/*'
       cache:
