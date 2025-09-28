@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compound Word Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #fffbe6;
+        }
+        #joinArea {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 60vh;
+        }
+        #playerNameInput {
+            font-size: 1.5em;
+            padding: 16px 24px;
+            border-radius: 16px;
+            border: 2px solid #f6d365;
+            margin-bottom: 24px;
+            width: 320px;
+            box-sizing: border-box;
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+        }
+        #joinBtn {
+            font-size: 1em;
+            padding: 10px 24px;
+            border-radius: 10px;
+            background: #ffe082;
+            border: 1.5px solid #ffb300;
+            color: #333;
+            font-weight: 500;
+            box-shadow: 1px 1px 4px #ffd54f88;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background 0.2s;
+            width: 320px !important;
+            box-sizing: border-box;
+            display: block;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 48px;
+            font-size: 2.5em;
+            color: #f0932b;
+            letter-spacing: 2px;
+        }
+        #mainGame {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            min-height: 400px;
+        }
+        #leftPanel, #rightPanel {
+            background: #f9f9f9;
+            border-radius: 16px;
+            box-shadow: 0 0 8px #ccc;
+            margin: 8px;
+            flex: 1 1 50%;
+            min-width: 220px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #rightPanel {
+            background: #f9f9f9;
+            border-radius: 16px;
+            box-shadow: 0 0 8px #ccc;
+            margin: 8px auto;
+            padding: 20px;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #game {
+            flex: 2;
+            padding: 20px;
+        }
+        #hand {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .card-btn {
+            background: linear-gradient(135deg, #ffec70 0%, #ffb347 100%);
+            border: 3px solid #ff9800;
+            border-radius: 32px;
+            color: #333;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0;
+            padding: 32px 24px; /* More space around text */
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 4px 4px 16px #ffd70088;
+            width: 100%;
+            letter-spacing: 2px;
+        }
+        .card-btn.selected {
+            background: linear-gradient(135deg, #7ed6df 0%, #22a6b3 100%);
+            border: 3px solid #0984e3;
+            color: #fff;
+            box-shadow: 0 0 24px #22a6b3;
+        }
+        #checkBtn, #drawBtn, #startBtn, #joinBtn {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            border: 2px solid #f0932b;
+            border-radius: 16px;
+            color: #333;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 12px 0;
+            padding: 14px 28px;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 2px 2px 8px #fda08588;
+            width: 100%;
+        }
+        #deckCount {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 16px 0;
+        }
+        #bottomBar {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: #fffbe6;
+            display: flex;
+            flex-direction: row;
+            box-shadow: 0 -2px 8px #fda08588;
+            z-index: 999;
+        }
+        #bottomLeft, #bottomRight {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        #drawBtn, #startBtn {
+            font-size: 1.2em;
+            padding: 14px 36px;
+            border-radius: 14px;
+            background: #ffe082;
+            border: 2px solid #ffb300;
+            color: #333;
+            font-weight: 600;
+            box-shadow: 1px 1px 6px #ffd54f88;
+            cursor: pointer;
+            margin: 0 12px;
+            transition: background 0.2s;
+        }
+        #restartArea {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 24px;
+        }
+        .center-btn {
+            font-size: 1.3em;
+            padding: 18px 40px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            border: 2px solid #f0932b;
+            color: #333;
+            font-weight: bold;
+            box-shadow: 2px 2px 8px #fda08588;
+            cursor: pointer;
+        }
+        #popupMsg {
+            /* already styled in your code */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Compound Word Game!</h1>
+    <div id="joinArea">
+        <input type="text" id="playerNameInput" placeholder="Enter your name" />
+        <button id="joinBtn">Join Game</button>
+    </div>
+    <div id="mainGame" style="display:none;">
+        <div id="rightPanel">
+            <h2>Your Hand</h2>
+            <div id="hand"></div>
+            <div id="deckCount"></div>
+            <button id="checkBtn">Check</button>
+            <div id="foundWords"></div>
+        </div>
+    </div>
+    <div id="bottomBar" style="display:none;">
+        <div id="bottomLeft" style="width:50%; float:left; text-align:center;">
+            <button id="drawBtn">Draw Card</button>
+        </div>
+        <div id="bottomRight" style="width:50%; float:right; text-align:center;">
+            <button id="startBtn" class="center-btn">Restart Game</button>
+        </div>
+    </div>
+    <div id="popupMsg" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:1000; min-width:200px; padding:20px; border-radius:16px; font-size:1.3em; font-weight:bold; text-align:center;"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
